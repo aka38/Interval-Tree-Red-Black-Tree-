@@ -1,3 +1,4 @@
+// Source:-CLRS,Textbook and slide.
 #include<bits/stdc++.h>
 using namespace std;
 #define MP          make_pair
@@ -285,7 +286,7 @@ node* interval_search(node T,int i,int j)
         if(x->left!=nil && x->left->key>=i) x=x->left;
         else x=x->right;
     }
-    //cout<<x->low<<" "<<x->high<<endl;
+    debug("("<<x->low<<" ,"<<x->high<<")");
     return x;
 }
 int key_check(node* x)
@@ -315,7 +316,8 @@ nil =new struct node;
  T.low=-1; T.high=-1; T.key=-1; T.color=1;
  T.left=nil; T.right=nil,T.parent=nil;
  root =&T;
- node *ptr;
+node* if_find;
+node* if_find1;
 
     interval[0][0]=15;
     interval[0][1]=20;
@@ -353,6 +355,19 @@ nil =new struct node;
    key_check(root);
    debug("Preorder:");
    dfs(root);
+   debug("Intervals overlapping with (14,16):");
+   if_find=interval_search(T,14,16);
+   if(if_find->low==0)
+   {
+       debug("No overlap.");
+   }
+    debug("Intervals overlapping with (30,40):");
+  if_find1=interval_search(T,30,40);
+    if(if_find1->low==0)
+   {
+       debug("No overlap.");
+   }
 
+return 0;
 }
 
