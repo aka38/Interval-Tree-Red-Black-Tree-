@@ -3,6 +3,8 @@ using namespace std;
 #define MP          make_pair
 #define PB          push_back
 #define LL          long long
+#define MAX         1000005
+#define mod         1000000007
 #define debug(a)    cout<<a<<"\n"
 #define sd(a)       scanf("%d",&a)
 #define sc(a)       scanf("%c",&a)
@@ -251,7 +253,7 @@ void interval_delete(node T, node* z)
         x=y->left;
     else
         x=y->right;
-  
+
     debug(y->parent->low);
     x->parent=y->parent;
     if(y->parent==nil)
@@ -267,12 +269,12 @@ void interval_delete(node T, node* z)
 
     if(y->color==1) delete_fix(T,x);
 }
-
+int cnt;
 void dfs(node* x)
 {
     if(x==nil) return;
     dfs(x->left);
-    debug("LOW: "<<x->low<<" & LOW[parent] "<<x->parent->low);
+    debug("( "<<x->low<<" , "<<x->high<<")"<<" key:"<<x->key);
     dfs(x->right);
 }
 node* interval_search(node T,int i,int j)
@@ -285,6 +287,13 @@ node* interval_search(node T,int i,int j)
     }
     //cout<<x->low<<" "<<x->high<<endl;
     return x;
+}
+int key_check(node* x)
+{
+    if(x==nil) return 0;
+    x->key=mx(key_check(x->left),key_check(x->right),x->high);
+    return x->key;
+
 }
 //void init(node *z)
 //{
@@ -336,12 +345,14 @@ nil =new struct node;
             temp->parent=nil;
             temp->color=0;
             temp->low=interval[i][0];
-            temp->high=interval[i][0];
+            temp->high=interval[i][1];
             temp->key=0;
             interval_insert(T,temp);
         }
     }
-
+   key_check(root);
+   debug("Preorder:");
+   dfs(root);
 
 }
 
