@@ -1,4 +1,3 @@
-// Source:-CLRS,Textbook and slide.
 #include<bits/stdc++.h>
 using namespace std;
 #define MP          make_pair
@@ -286,7 +285,7 @@ node* interval_search(node T,int i,int j)
         if(x->left!=nil && x->left->key>=i) x=x->left;
         else x=x->right;
     }
-    debug("("<<x->low<<" ,"<<x->high<<")");
+
     return x;
 }
 int key_check(node* x)
@@ -353,21 +352,107 @@ node* if_find1;
         }
     }
    key_check(root);
-   debug("Preorder:");
+   debug("Preorder traversal:");
+    debug("");
    dfs(root);
    debug("Intervals overlapping with (14,16):");
+    debug("");
    if_find=interval_search(T,14,16);
    if(if_find->low==0)
    {
        debug("No overlap.");
+        debug("");
+   }
+   else
+   {
+         debug("Interval are: ("<<if_find->low<<" ,"<<if_find->high<<")");
+       debug("");
    }
     debug("Intervals overlapping with (30,40):");
   if_find1=interval_search(T,30,40);
     if(if_find1->low==0)
    {
        debug("No overlap.");
+        debug("");
+   }
+   else  debug("Interval are: ("<<if_find->low<<" ,"<<if_find->high<<")");
+    debug("");
+   debug("|^| Above is the red black tree form sample cases.");
+   debug("");
+   int ch;
+   while(1)
+   {
+       cout<<"Enter 1. For insertion , 2.For Deletion , 3.For Search ,4. For Traversing 5 or any other .For exit:\n";
+       debug("");
+       cin>>ch;
+       if(ch==1)
+       {
+           int a,b;
+           cout<<"Enter number of intervals you want to insert:";
+           debug("");
+           int x;
+           cin>>x;
+           for(int i=0;i<x;i++)
+           {
+               cin>>a>>b;
+               if(T.low==-1)
+               {
+                  T.low=interval[i][0];
+                  T.high=interval[i][1];
+                  T.key=0;
+               }
+               else
+               {
+                    node* temp=new struct node;
+                    temp->left=nil;
+                    temp->right=nil;
+                    temp->parent=nil;
+                    temp->color=0;
+                    temp->low=a;
+                    temp->high=b;
+                    temp->key=0;
+                    interval_insert(T,temp);
+               }
+       }
+   }
+               else if(ch==2)
+               {
+                     key_check(root);
+                   node* if_find;
+                   int x,y;
+
+                debug("Enter interval to be deleted");
+                cin>>x>>y;
+                if_find=interval_search(T,x,y);
+                if(if_find->low>=0)
+                    interval_delete(T,interval_search(T,x,y));
+                else
+                    debug("Entered interval not found");
+
+               }
+               else if(ch==3)
+               {
+                   int x,y;
+                  key_check(root);
+                debug("Enter interval to be searched");
+                cin>>x>>y;
+                if_find=interval_search(T,x,y);
+
+                if(if_find->low>=0)
+                     debug("Interval are: ("<<if_find->low<<" ,"<<if_find->high<<")");
+                else
+                    debug("No overlapping interval found");
+
+               }
+                else if(ch==4)
+               {
+                   dfs(root);
+               }
+
+
+           else exit(0);
    }
 
-return 0;
+
 }
 
